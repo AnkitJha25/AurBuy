@@ -1,25 +1,39 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, createRef} from 'react';
 import { auth, googleAuthProvider } from '../../firebase';
 import { toast } from 'react-toastify';
 import {Button} from 'antd';
 import { MailOutlined , GoogleOutlined} from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import {Link, useNavigate} from 'react-router-dom'
+import axios from "axios";
+import { async } from '@firebase/util';
+
+const createOrUpdateUser = async (authtoken) => {
+    return await axios.post(`${process.env.REACT_APP_API}/create-or-update-user`, {}, {
+        headers: {
+            authtoken,
+        },
+    });
+}
 
 const Login = () => {
     let navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
-    let dispatch = useDispatch();
 
     const {user} = useSelector((state) => ({...state}));
+    //const idTokenResult = user.getIdTokenResult();
+
+    // createOrUpdateUser(idTokenResult.token).then((res) => console.log("CREATE OR UPDATE RES", res))
+    // .catch();
 
     useEffect(() => {
         if(user && user.token){
             navigate("/");
         } 
     }, [user]);
+    let dispatch = useDispatch();
 
     const handleSubmit = async(e) => {
         e.preventDefault(); // just to prevent the browser from getting reloaded
@@ -31,13 +45,17 @@ const Login = () => {
             const {user} = result
             const idTokenResult = await user.getIdTokenResult();
 
-            dispatch({
-                type: "LOGGED_IN_USER",
-                payload: {
-                    email : user.email,
-                    token: idTokenResult.token,
-                },
-            });
+            createOrUpdateUser(idTokenResult.token)
+            .then((res) => console.log("CREATE OR UPDATE RES", res))
+            .catch();
+
+            // dispatch({
+            //     type: "LOGGED_IN_USER",
+            //     payload: {
+            //         email : user.email,
+            //         token: idTokenResult.token,
+            //     },
+            // });
             navigate('/');
         }catch(error){
             console.log(error);
