@@ -11,7 +11,7 @@ import { async } from '@firebase/util';
 const createOrUpdateUser = async (authtoken) => {
     return await axios.post(`${process.env.REACT_APP_API}/create-or-update-user`, {}, {
         headers: {
-            authtoken,
+            authtoken, // authtoken: authtoken
         },
     });
 }
@@ -56,7 +56,7 @@ const Login = () => {
             //         token: idTokenResult.token,
             //     },
             // });
-            navigate('/');
+            //navigate('/');
         }catch(error){
             console.log(error);
             toast.error(error.message);
