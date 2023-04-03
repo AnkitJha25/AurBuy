@@ -20,11 +20,11 @@ const Login = () => {
     // createOrUpdateUser(idTokenResult.token).then((res) => console.log("CREATE OR UPDATE RES", res))
     // .catch();
 
-    useEffect(() => {
-        if(user && user.token){
-            navigate("/");
-        } 
-    }, [user]);
+    // useEffect(() => {
+    //     if(user && user.token){
+    //         navigate("/");
+    //     } 
+    // }, [user]);
     let dispatch = useDispatch();
 
     const roleBasedRedirect = (res) => {

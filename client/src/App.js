@@ -58,12 +58,7 @@ const App = () => {
         <Route exact path="/register" element={<Register/>} />
         <Route exact path="/register/complete" element={<RegisterComplete/>} />
         <Route exact path="/forgot/password" element={<ForgotPassword/>}/>
-        <Route path="/user/history" element={
-          <UserRoute>
-          <History/>
-          </UserRoute>
-        }/>
-        {/* <Route exact path="/user/history" element={<UserRoute component={History}/>}/> */}
+        <Route exact path="/user/history/*" element={<UserRoute element={<History/>}/>}/>
       </Routes>
     </>
   );
