@@ -8,7 +8,7 @@ const UserRoute = ({children, ...rest}) => {
 
     return user && user.token ? (
         <Routes>
-        <Route {...rest} render={() => children} />
+        <Route {...rest}/>
         </Routes>
     ) : (
         <LoadingToRedirect/>

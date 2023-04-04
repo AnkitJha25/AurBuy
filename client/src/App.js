@@ -11,6 +11,10 @@ import RegisterComplete from './pages/auth/RegisterComplete';
 import ForgotPassword from './pages/auth/ForgotPassword';
 import History from './pages/user/History';
 import UserRoute from './components/routes/UserRoute';
+import AdminRoute from './components/routes/AdminRoute';
+import Password from './pages/user/Password';
+import Wishlist from './pages/user/Wishlist';
+import AdminDashboard from './pages/admin/AdminDashboard';
 import 'antd/dist/reset.css';
 
 import { auth } from './firebase';
@@ -46,7 +50,7 @@ const App = () => {
 
     // cleanup
     return () => unsubscribe();
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
@@ -58,7 +62,14 @@ const App = () => {
         <Route exact path="/register" element={<Register/>} />
         <Route exact path="/register/complete" element={<RegisterComplete/>} />
         <Route exact path="/forgot/password" element={<ForgotPassword/>}/>
-        <Route exact path="/user/history/*" element={<UserRoute element={<History/>}/>}/>
+        <Route exact path="/user/history" element={<History/>}/>
+        <Route exact path="/user/password" element={<Password />}/>
+        <Route exact path="/user/wishlist" element={<Wishlist />}/>
+        <Route exact path="/admin/dashboard" element={<AdminDashboard />}/>
+        {/* <Route exact path="/user/history" element={<UserRoute><History /></UserRoute>}/>
+        <Route exact path="/user/password" element={<UserRoute><Password /></UserRoute>}/>
+        <Route exact path="/user/wishlist" element={<UserRoute><Wishlist /></UserRoute>}/>
+        <Route exact path="/admin/dashboard" element={<AdminRoute><AdminDashboard /></AdminRoute>}/> */}
       </Routes>
     </>
   );

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const UserNav = () => {
+const UserNav = () => (
     <nav>
         <ul className="nav flex-column">
             <li className="nav-item">
@@ -17,6 +17,6 @@ const UserNav = () => {
             </li>
         </ul>
     </nav>
-};
+);
 
 export default UserNav;
