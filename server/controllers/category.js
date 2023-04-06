@@ -21,7 +21,17 @@ exports.read = async (req,res) => {
 };
 
 exports.update = async (req,res) => {
-    //
+    const {name} = req.body; 
+    try{
+        const updated = await Category.findOneAndUpdate(
+            {slug: req.params.slug}, 
+            {name, slug: slugify(name)}, 
+            {new: true}
+        );
+        res.json(updated);
+    }catch(err){
+        res.status(400).send("Create Update Failed");
+    }
 };
 
 exports.remove = async (req,res) => {
