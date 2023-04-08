@@ -17,6 +17,7 @@ import Wishlist from './pages/user/Wishlist';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import CategoryCreate from './pages/admin/category/CategoryCreate';
 import CategoryUpdate from './pages/admin/category/CategoryUpdate';
+import SubCreate from './pages/admin/sub/SubCreate';
 import 'antd/dist/reset.css';
 
 import { auth } from './firebase';
@@ -70,6 +71,7 @@ const App = () => {
         <Route exact path="/admin/dashboard" element={<AdminDashboard />}/>
         <Route exact path='/admin/category' element={<CategoryCreate/>}/>
         <Route exact path='/admin/category/:slug' element={<CategoryUpdate/>}/>
+        <Route exact path='/admin/sub' element={<SubCreate/>}/>
         {/* <Route exact path="/user/history" element={<UserRoute><History /></UserRoute>}/>
         <Route exact path="/user/password" element={<UserRoute><Password /></UserRoute>}/>
         <Route exact path="/user/wishlist" element={<UserRoute><Wishlist /></UserRoute>}/>

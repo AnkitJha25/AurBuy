@@ -2,17 +2,20 @@ import React, {useState, useEffect} from "react";
 import AdminNav from "../../../components/nav/AdminNav";
 import {toast} from 'react-toastify';
 import {useSelector} from 'react-redux';
-import {createCategory, getCategories, removeCategory,} from "../../../functions/category";
+import {getCategories} from "../../../functions/category"
+import {createSub, getSubs, removeSub,} from "../../../functions/sub";
 import { Link } from "react-router-dom";
 import {EditOutlined, DeleteOutlined} from "@ant-design/icons"
 import CategoryForm from "../../../components/forms/CategoryForm";
 import LocalSearch from "../../../components/forms/LocalSearch";
 
-const CategoryCreate = () => {
+const SubCreate = () => {
     const {user} = useSelector((state) => ({...state}));
     const [name, setName] = useState("");
     const [loading, setLoading] = useState(false);
     const [categories, setCategories] = useState([]);
+
+    const [category, setCategory] = useState("");
     //1
     const [keyword, setKeyword] = useState("");
 
@@ -27,13 +30,12 @@ const CategoryCreate = () => {
     const handleSubmit = (e) =>{
         e.preventDefault();
         setLoading(true);
-        createCategory({name}, user.token)
+        createSub({name, parent: category}, user.token)
         .then((res) => {
             //console.log(res);
             setLoading(false);
             setName("");
             toast.success(`"${res.data.name}" is created`);
-            loadCategories();
         }).catch((err) => {
             console.log(err);
             setLoading(false);
@@ -46,11 +48,10 @@ const CategoryCreate = () => {
         // console.log(answer, slug);
         if(answer){
             setLoading(true);
-            removeCategory(slug, user.token)
+            removeSub(slug, user.token)
             .then(res => {
                 setLoading(false);
                 toast.error(`${res.data.name} deleted`);
-                loadCategories();
             })
             .catch(err => {
                 if(err.response.status === 400){
@@ -74,8 +75,19 @@ const CategoryCreate = () => {
                     {loading ? (
                         <h4 className="text-danger">Loading...</h4>
                     ) : (
-                        <h4>Create Category</h4>
+                        <h4>Create Sub Category</h4>
                     )}
+
+                    <div className="form-group">
+                        <label>Parent Category</label>
+                        <select name="category" className="form-control" onChange={(e) => setCategory(e.target.value)}>
+                            <option>Please Select</option>
+                            {categories.length > 0 && 
+                            categories.map((c) => (<option key={c._id} value={c._id}>{c.name}</option>))}
+                        </select>
+                    </div>
+
+                    {JSON.stringify(category)};
 
                     {/* Refractor the component */}
                     <CategoryForm handleSubmit={handleSubmit} name={name} setName={setName}/>
@@ -84,7 +96,7 @@ const CategoryCreate = () => {
                     <LocalSearch keyword={keyword} setKeyword={setKeyword}/>
                     
                     {/* 5 */}
-                    {categories.filter(searched(keyword)).map((c) => (
+                    {/* {categories.filter(searched(keyword)).map((c) => (
                         <div className="alert alert-secondary" key={c._id}>
                             {c.name} 
                             <span onClick={() => handleRemove(c.slug)} className="btn btn-sm float-right">
@@ -96,11 +108,11 @@ const CategoryCreate = () => {
                                 </span>
                             </Link>
                         </div>
-                    ))}
+                    ))} */}
                 </div>
             </div>
         </div>
     );
 };
 
-export default CategoryCreate;
+export default SubCreate;
