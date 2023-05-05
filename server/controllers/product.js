@@ -17,7 +17,23 @@ exports.create = async (req,res) => {
 };
 
 // Query the products that are saved in the database.
-exports.read = async (req, res) => {
-    let products = await Product.find({});
+exports.listAll = async (req, res) => {
+    let products = await Product.find({})
+    .limit(parseInt(req.params.count))
+    .populate('category') // store just id and then use populate to fetch
+    .populate('subs')     // the entire information corresponding to it.
+    .sort([['createdAt','desc']])
+    .exec();
     res.json(products);
 };
+
+exports.remove = async (req,res) => {
+    try { 
+        const deleted = await Product.findOneAndRemove({slug: req.params.slug}).exec();
+        res.json(deleted);
+    }
+    catch(err){
+        console.log(err);
+        return res.status(400).send('Product delete failed');
+    }
+}

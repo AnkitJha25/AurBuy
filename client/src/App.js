@@ -20,6 +20,7 @@ import CategoryUpdate from './pages/admin/category/CategoryUpdate';
 import SubCreate from './pages/admin/sub/SubCreate';
 import SubUpdate from './pages/admin/sub/SubUpdate';
 import ProductCreate from './pages/admin/product/ProductCreate';
+import AllProducts from './pages/admin/product/AllProducts';
 import 'antd/dist/reset.css';
 
 import { auth } from './firebase';
@@ -80,6 +81,7 @@ const App = () => {
         <Route exact path="/user/password" element={<UserRoute><Password /></UserRoute>}/>
         <Route exact path="/user/wishlist" element={<UserRoute><Wishlist /></UserRoute>}/>
         <Route exact path="/admin/dashboard" element={<AdminRoute><AdminDashboard /></AdminRoute>}/> */}
+        <Route exact path='/admin/products' element={<AllProducts/>} />
       </Routes>
     </>
   );
