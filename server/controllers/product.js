@@ -63,19 +63,48 @@ exports.update = async (req,res) => {
     }
 };
 
+// Without using Pagination
+// exports.list = async (req,res) => {
+//     try{
+//         const {sort, order, limit} = req.body;
+//         const products = await Product.find({})
+//         .populate('category')
+//         .populate('subs')
+//         .sort([[sort,order]])
+//         .limit(limit)
+//         .exec();
+
+//         res.json(products);
+//     }
+//     catch(err){
+//         console.log(err)
+//     }
+// };
+
+// Using Pagination
 exports.list = async (req,res) => {
-    try{
-        const {sort, order, limit} = req.body;
+    try {
+        const {sort,order,page} = req.body;
+        const currentPage = page || 1;
+        const perPage = 3;
+
         const products = await Product.find({})
-        .populate('category')
-        .populate('subs')
+        .skip((currentPage-1)*perPage)
+        .populate("category")
+        .populate("subs")
         .sort([[sort,order]])
-        .limit(limit)
+        .limit(perPage)
         .exec();
 
         res.json(products);
     }
     catch(err){
-        console.log(err)
+        console.log(err);
     }
-};
+}
+
+exports.productsCount = async (req,res) => {
+    let total = await Product.find({}).estimatedDocumentCount().exec();
+    // .estimatedDocumentCount() is used to return total count of products in the db
+    res.json(total);
+}

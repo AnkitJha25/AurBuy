@@ -1,25 +1,32 @@
 import React, {useState, useEffect} from "react";
-import { getProducts } from "../../functions/product";
+import { getProducts, getProductsCount } from "../../functions/product";
 import ProductCard from "../cards/ProductCard";
 import LoadingCard from "../cards/LoadingCard";
+import { Pagination } from "antd";
 
 const NewArrivals = () => {
     const [loading, setLoading] = useState(false);
     const [products, setProducts] = useState([]);
+    const [page, setPage] = useState(1);
+    const [productsCount, setProductsCount] = useState(0);
 
     useEffect(() => {
         loadAllProducts();
-    }, []);
+    }, [page]);
+
+    useEffect(() => {
+        getProductsCount().then(res => setProductsCount(res.data));
+    }, [])
 
     const loadAllProducts = () => {
         setLoading(true);
-        getProducts('createdAt', 'desc', 3)
+        getProducts('createdAt', 'desc', page)
         .then(res => {
             setProducts(res.data);
             setLoading(false);
         });
     };
-
+    
     return (
         <>
         <div className="container">
@@ -31,6 +38,12 @@ const NewArrivals = () => {
                     </div>
                 ))}
             </div>)}
+        </div>
+
+        <div className="row">
+            <nav className="col-md-4 offset-md-4 text-center pt-5 p-3">
+                <Pagination current={page} total={Math.ceil(productsCount/3)*10} onChange={value => {console.log(value); setPage(value);}} />
+            </nav>
         </div>
         </>
     )
