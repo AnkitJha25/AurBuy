@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const {ObjectId} = mongoose.Schema;
+const {ObjectId} = mongoose.Schema.Types;
 
 const productSchema = new mongoose.Schema({
     title: {
@@ -55,10 +55,10 @@ const productSchema = new mongoose.Schema({
         type: String,
         enum: ["Apple", "Samsung", "Microsoft", "Lenovo", "ASUS"],
     },
-    ratings: {
-        star: Number,
-        postedBy: {type: ObjectId, ref: "User"},
-    },
+    // ratings: {
+    //     star: Number,
+    //     postedBy: {type: ObjectId, ref: "User",},
+    // },
 },
 {timestamps: true}
 );
