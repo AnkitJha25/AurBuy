@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { AppstoreOutlined, SettingOutlined, UserAddOutlined, UserOutlined, LogoutOutlined } from '@ant-design/icons';
+import { AppstoreOutlined, SettingOutlined, UserAddOutlined, UserOutlined, LogoutOutlined, ShoppingOutlined } from '@ant-design/icons';
 import { Menu } from 'antd';
 import {Link} from "react-router-dom";
 import firebase from "firebase/compat/app";
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigate} from "react-router-dom";
+import Search from '../forms/Search';
+import Shop from "../../pages/Shop";
 
 const {SubMenu, Item} = Menu;
 
@@ -32,6 +34,10 @@ const Header = () => {
         <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
             <Item key="home" icon={<AppstoreOutlined/>}>
                 <Link to="/">Home</Link>
+            </Item>
+
+            <Item key="shop" icon={<ShoppingOutlined/>}>
+                <Link to="/shop">Shop</Link>
             </Item>
 
             {!user && (
@@ -64,6 +70,9 @@ const Header = () => {
                     </Item>
                 </SubMenu>)}
 
+                <span className="float-right p-1">
+                    <Search/>
+                </span>
         </Menu>
     );
 };
