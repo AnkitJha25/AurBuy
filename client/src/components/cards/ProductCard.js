@@ -7,7 +7,7 @@ import {Link} from 'react-router-dom';
 const {Meta} = Card;
 
 const ProductCard = ({product}) => {
-    const {images, title, description, slug} = product;
+    const {images, title, description, slug, price} = product;
     return (
         <Card 
             cover={<img src={images && images.length ? images[0].url : loadingImg} 
@@ -20,7 +20,7 @@ const ProductCard = ({product}) => {
             </Link>, 
             <><ShoppingCartOutlined className="text-danger"/> <br/> Add to cart </>]}
         >
-            <Meta title={title} description={`${description && description.substring(0,40)}...`} />
+            <Meta title={`${title} - Rs. ${price}`} description={`${description && description.substring(0,40)}...`} />
         </Card>
     );
 }
