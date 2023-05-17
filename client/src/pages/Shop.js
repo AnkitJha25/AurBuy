@@ -247,7 +247,7 @@ const Shop = () => {
                     <h4>Search Filter</h4>
                     <hr/>
 
-                    <Menu defaultOpenKeys={["1","2","3","4","5","7"]} mode="inline">
+                    <Menu defaultOpenKeys={["1","2","3","4","5","6"]} mode="inline">
                         {/*Price*/}
                         <SubMenu key="1" title={<span className='h6'><DollarOutlined /> Price</span>}>
                             <div>
