@@ -1,11 +1,13 @@
 import React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import ProductCardInCheckout from '../components/cards/ProductCardInCheckout';
+import {userCart} from '../functions/user';
 
 const Cart = () => {
     const {cart, user} = useSelector((state) => ({...state}));
     const dispatch = useDispatch();
+    let navigate = useNavigate();
 
     const getTotal = () => {
         return cart.reduce((currentValue, nextValue) => {
@@ -14,8 +16,13 @@ const Cart = () => {
     }
 
     const saveOrderToDB = () => {
-        //
-    }
+        userCart(cart, user.token)
+        .then(res => {
+            console.log('CART POST RES', res);
+            if(res.data.ok) navigate('/checkout');
+        })
+        .catch(err => console.log('cart save err', err));
+    };
 
     const showCartItems = () => (
         <table className='table table-bordered'>

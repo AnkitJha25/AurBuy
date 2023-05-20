@@ -1,6 +1,6 @@
 import {Routes, Route} from 'react-router-dom';
 import { useEffect } from 'react';
-import {toast, ToastContainer} from 'react-toastify';
+import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; 
 
 import Login from './pages/auth/Login';
@@ -28,6 +28,7 @@ import CategoryHome from './pages/category/CategoryHome';
 import SubHome from './pages/sub/SubHome';
 import Shop from './pages/Shop';
 import Cart from './pages/Cart';
+import Checkout from './pages/Checkout';
 import 'antd/dist/reset.css';
 
 import { auth } from './firebase';
@@ -96,6 +97,7 @@ const App = () => {
         <Route exact path='/sub/:slug' element={<SubHome/>}/>
         <Route exact path='/shop' element={<Shop/>}/>
         <Route exact path='/cart' element={<Cart/>}/>
+        <Route exact path='/checkout' element={<Checkout/>}/>
       </Routes>
     </>
   );
