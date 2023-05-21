@@ -29,6 +29,7 @@ import SubHome from './pages/sub/SubHome';
 import Shop from './pages/Shop';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
+import CreateCouponPage from './pages/admin/coupon/CreateCouponPage';
 import 'antd/dist/reset.css';
 
 import { auth } from './firebase';
@@ -98,6 +99,7 @@ const App = () => {
         <Route exact path='/shop' element={<Shop/>}/>
         <Route exact path='/cart' element={<Cart/>}/>
         <Route exact path='/checkout' element={<Checkout/>}/>
+        <Route exact path='/admin/coupon' element={<CreateCouponPage/>}/>
       </Routes>
     </>
   );
