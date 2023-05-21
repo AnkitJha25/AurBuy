@@ -13,7 +13,12 @@ require('dotenv').config()
 const app = express();
 
 //db
-mongoose.connect(process.env.DATABASE, {})
+mongoose.connect(process.env.DATABASE, {
+    useNewUrlParser: true,
+    // useCreateIndex: true,
+    // useFindAndModify: true,
+    useUnifiedTopology: true
+})
 .then(() => console.log('DB CONNECTED'))
 .catch(err => console.log(`DB CONNECTTION ERR ${err}`));
 
