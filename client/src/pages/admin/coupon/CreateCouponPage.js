@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {toast} from 'react-toastify';
 import DatePicker from 'react-date-picker';
@@ -12,8 +12,15 @@ const CreateCouponPage = () => {
     const [expiry, setExpiry] = useState("");
     const [discount, setDiscount] = useState("");
     const [loading, setLoading] = useState("");
+    const [coupons, setCoupons] = useState([]);
 
     const {user} = useSelector((state) => ({...state}));
+
+    useEffect(() => {
+        loadAllCoupons();
+    }, []);
+
+    const loadAllCoupons = () => getCoupons().then(res => setCoupons(res.data));
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -22,6 +29,7 @@ const CreateCouponPage = () => {
         createCoupon({name, expiry, discount}, user.token)
         .then(res => {
             setLoading(false);
+            loadAllCoupons();
             setName("");
             setDiscount("");
             setExpiry("");
@@ -30,6 +38,19 @@ const CreateCouponPage = () => {
         .catch(err => console.log('Create coupon error', err));
     };
 
+    const handleRemove = (couponId) => {
+        if(window.confirm("Delete?")){
+            setLoading(true);
+            removeCoupon(couponId, user.token)
+            .then(res => {
+                loadAllCoupons();
+                setLoading(false);
+                toast.error(`Coupon "${res.data.name}" deleted`);
+            })
+            .catch(err => console.log(err));
+        }
+    }
+
     return (
         <div className='container-fluid'>
             <div className='row'>
@@ -37,7 +58,11 @@ const CreateCouponPage = () => {
                     <AdminNav/>
                 </div>
                 <div className='col-md-10'>
-                    <h4>Coupon</h4>
+                    {loading ? (
+                        <h4 className='text-danger'>Loading...</h4>
+                    ) : (
+                        <h4>Coupon</h4>
+                    )}
 
                     <form onSubmit={handleSubmit}>
                         <div className='form-group'>
@@ -77,6 +102,33 @@ const CreateCouponPage = () => {
 
                         <button className='btn btn-outline-primary'>Save</button>
                     </form>
+                    <br/>
+
+                    <table className='table table-bordered'>
+                        <thead className='thead-light'>
+                            <tr>
+                                <th scope='col'>Name</th>
+                                <th scope='col'>Expiry</th>
+                                <th scope='col'>Discount</th>
+                                <th scope='col'>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {coupons.map(c => (
+                                <tr key={c._id}>
+                                    <td>{c.name}</td>
+                                    <td>{new Date(c.expiry).toLocaleDateString()}</td>
+                                    <td>{c.discount}%</td>
+                                    <td>
+                                        <DeleteOutlined
+                                        onClick={() => handleRemove(c._id)}
+                                        className="text-danger pointer" />
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
