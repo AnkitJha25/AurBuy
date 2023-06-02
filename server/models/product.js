@@ -49,11 +49,11 @@ const productSchema = new mongoose.Schema({
     },
     color: {
         type: String,
-        enum: ["Black", "Brown", "Silver", "White", "Blue"],
+        enum: ["Black", "Grey", "Silver", "White", "Blue"],
     },
     brand: {
         type: String,
-        enum: ["Apple", "Samsung", "Microsoft", "Lenovo", "ASUS"],
+        enum: ["Apple", "Samsung", "Microsoft", "Lenovo", "HP", "Sony", "Others"],
     },
     // ratings: {
     //     star: Number,

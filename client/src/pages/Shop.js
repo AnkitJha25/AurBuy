@@ -18,9 +18,9 @@ const Shop = () => {
     const [categoryIds, setCategoryIds] = useState([]); 
     const [subs, setSubs] = useState([]);
     const [sub, setSub] = useState('');
-    const [brands, setBrands] = useState(["Apple", "Samsung", "Microsoft", "Lenovo", "ASUS"]);
+    const [brands, setBrands] = useState(["Apple", "Samsung", "Microsoft", "Lenovo", "HP", "Sony", "Others"]);
     const [brand, setBrand] = useState('');
-    const [colors, setColors] = useState(["Black", "Brown", "Silver", "White", "Blue"]);
+    const [colors, setColors] = useState(["Black", "Grey", "Silver", "White", "Blue"]);
     const [color, setColor] = useState("");
     const [shipping, setShipping] = useState("");
 
