@@ -13,14 +13,24 @@ require('dotenv').config()
 const app = express();
 
 //db
-mongoose.connect(process.env.DATABASE, {
-    useNewUrlParser: true,
-    // useCreateIndex: true,
-    // useFindAndModify: true,
-    useUnifiedTopology: true
-})
-.then(() => console.log('DB CONNECTED'))
-.catch(err => console.log(`DB CONNECTTION ERR ${err}`));
+const connection= async (URL)=>{
+    try {
+        // const URL='mongodb+srv://ankit:123@cluster0.szlik.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+        await mongoose.connect(URL, { useUnifiedTopology: true, useNewUrlParser: true});
+        console.log('Database Connected Succesfully');
+    } catch(error) {
+        console.log('Error: ', error.message);
+    }
+}
+connection(process.env.DATABASE);
+// mongoose.connect(process.env.DATABASE, {
+//     useNewUrlParser: true,
+//     // useCreateIndex: true,
+//     // useFindAndModify: true,
+//     useUnifiedTopology: true
+// })
+// .then(() => console.log('DB CONNECTED'))
+// .catch(err => console.log(`DB CONNECTTION ERR ${err}`));
 
 // middlewares
 app.use(morgan('dev'));
